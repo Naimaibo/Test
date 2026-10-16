@@ -414,4 +414,204 @@
       okBox.focus();
     });
   }
+
+  /* ---------- Fiches de jeux : modale avec transition depuis la carte ---------- */
+  var GAMES = {
+    "counter-strike-2": { platform: "PC", genre: "FPS tactique", players: "1 à 10 joueurs", level: "Compétitif", theme: 0,
+      text: "Deux équipes de cinq : l’une pose la bombe, l’autre la désamorce. Chaque round se joue au placement, à la communication et à un tir bien ajusté.",
+      here: "Écran 240 Hz et souris légère : tu vois l’ennemi une demi-seconde avant les autres. On réserve les 10 postes côte à côte pour un vrai 5v5.",
+      tip: "Venez à cinq et partagez les rôles avant le premier round." },
+    "valorant": { platform: "PC", genre: "FPS tactique", players: "1 à 10 joueurs", level: "Compétitif", theme: 2,
+      text: "Un FPS en 5v5 où chaque agent a des pouvoirs uniques. Tu combines tir précis et capacités pour prendre la zone ou la défendre.",
+      here: "Connecte ton compte Riot : tes skins et tes réglages de viseur sont là dès la première partie.",
+      tip: "Arrive 10 minutes avant pour régler ta sensibilité tranquillement." },
+    "league-of-legends": { platform: "PC", genre: "MOBA", players: "1 à 10 joueurs", level: "Compétitif", theme: 1,
+      text: "Cinq champions par équipe, une carte, un Nexus à détruire. Stratégie, timing et travail d’équipe décident des parties qui durent 25 à 40 minutes.",
+      here: "Des postes alignés pour rester dans la même voix d’équipe, avec un casque fermé qui coupe le bruit de la salle.",
+      tip: "Prévois la formule Soirée (4 h) : une partie ne se joue jamais en 20 minutes." },
+    "fortnite": { platform: "PC", genre: "Battle royale", players: "Duo, trio ou squad", level: "Tous niveaux", theme: 2,
+      text: "100 joueurs sur une île, un seul survivant. Tu construis, tu te bats et tu avances avec la tempête qui se referme.",
+      here: "La fluidité à 240 Hz change tout pendant les combats de construction. Idéal pour jouer en squad entre potes.",
+      tip: "Le mode Duo marche très bien avec le tarif étudiant." },
+    "apex-legends": { platform: "PC", genre: "Battle royale", players: "Trio · 3 joueurs", level: "Intermédiaire", theme: 0,
+      text: "Des équipes de trois, des légendes aux capacités à combiner et des déplacements très nerveux. Ça va vite, et chaque erreur se paie.",
+      here: "Trois postes voisins pour se parler sans crier, et un bar pour recharger entre deux atterrissages.",
+      tip: "Réserve trois postes d’affilée pour jouer ensemble sans te faire séparer." },
+    "rocket-league": { platform: "PC", genre: "Foot-voitures", players: "3v3 · 1 à 6 joueurs", level: "Tous niveaux", theme: 1,
+      text: "Du football avec des voitures propulsées. Les règles se comprennent en une minute, la maîtrise des aériens prend des mois.",
+      here: "Le jeu de nos tournois : la Glitch Cup #11 se joue en 3v3 le samedi 24 octobre.",
+      tip: "Parfait pour les débutants : les matchs durent 5 minutes." },
+    "overwatch-2": { platform: "PC", genre: "FPS héroïque", players: "1 à 10 joueurs", level: "Intermédiaire", theme: 0,
+      text: "Des héros très différents qui jouent en équipe : tank, soutien ou dégâts. Tu choisis ton rôle et tu enchaînes les objectifs.",
+      here: "Un jeu coloré et facile à suivre pour un groupe mixte, avec des parties courtes qui s’enchaînent.",
+      tip: "Chacun son rôle : un tank, deux dégâts, un soutien et le tour est joué." },
+    "phasmophobia": { platform: "PC", genre: "Coop horreur", players: "1 à 4 joueurs", level: "Tous niveaux", theme: 2,
+      text: "Vous enquêtez dans une maison hantée avec des détecteurs, et vous devez deviner de quel fantôme il s’agit sans vous faire attraper.",
+      here: "Lumières coupées et casques sur les oreilles : l’ambiance de la Nuit Frisson du 31 octobre.",
+      tip: "Joue à quatre : l’enquête est plus drôle quand tout le monde crie." },
+    "ea-sports-fc-26": { platform: "PS5", genre: "Football", players: "1 à 4 joueurs en local", level: "Tous niveaux", theme: 1,
+      text: "Le football en jeu vidéo : tu choisis ton club, tu construis ton équipe et tu défies tes amis en match rapide ou en tournoi.",
+      here: "TV 65 pouces en 4K 120 Hz et canapé pour quatre : le rendez-vous des chambrages. Le tournoi Duel FC a lieu le samedi 21 novembre.",
+      tip: "Un 2v2 en local sur un même canapé, rien ne bat ça." },
+    "tekken-8": { platform: "PS5", genre: "Baston", players: "1v1 · tournoi possible", level: "Intermédiaire", theme: 2,
+      text: "Un jeu de combat en 3D avec des enchaînements spectaculaires, des murs qui se brisent et une barre de rage pour les retournements.",
+      here: "Parfait pour la Fighting Night du 12 novembre : on installe un bracket et un écran géant.",
+      tip: "Débutant ? Lance le mode Arcade, les combos arrivent vite." },
+    "street-fighter-6": { platform: "PS5", genre: "Baston", players: "1v1 · tournoi possible", level: "Tous niveaux", theme: 0,
+      text: "Le jeu de combat le plus accessible de la série : des contrôles modernes pour débuter, un système de pression et de défense pour progresser.",
+      here: "On a des manettes DualSense chargées et assez de place pour un public autour du match.",
+      tip: "Choisis les contrôles « Moderne » pour sortir les coups spéciaux sans les mémoriser." },
+    "mortal-kombat-1": { platform: "PS5", genre: "Baston", players: "1v1 · tournoi possible", level: "Tous niveaux", theme: 2,
+      text: "Un jeu de combat brutal et théâtral, avec des fatalités spectaculaires et un mode kameo qui ajoute un partenaire en soutien.",
+      here: "Le jeu qui fait réagir la salle entière à chaque fatalité. Les spectateurs sont les bienvenus.",
+      tip: "Le mode Kameo permet de jouer à deux contre l’IA, avec un seul canapé." },
+    "gran-turismo-7": { platform: "PS5", genre: "Course", players: "1 à 2 joueurs en écran partagé", level: "Tous niveaux", theme: 1,
+      text: "Une simulation de course soignée avec plus de 400 voitures et des circuits mythiques. Tu pilotes à la manette comme sur la route.",
+      here: "L’écran partagé en 65 pouces te donne l’impression d’être au bord de la piste.",
+      tip: "Lance un duel sur le circuit de Suzuka pour départager la team." },
+    "it-takes-two": { platform: "PS5", genre: "Coop", players: "2 joueurs en coop", level: "Tous niveaux", theme: 0,
+      text: "Une aventure à jouer obligatoirement à deux : chaque niveau change les règles et vous force à vous synchroniser.",
+      here: "Le jeu des couples et des meilleurs potes : deux manettes, un canapé et beaucoup de rires.",
+      tip: "Prévois 3 heures : le jeu se joue en continu et tu auras du mal à t’arrêter." },
+    "astro-bot": { platform: "PS5", genre: "Plateforme", players: "1 joueur · à tour de rôle", level: "Débutant OK", theme: 1,
+      text: "Un jeu de plateforme plein de couleurs qui exploite les gâchettes et le retour haptique de la manette DualSense.",
+      here: "On le joue à tour de rôle sur le canapé : chacun passe la manette quand il tombe.",
+      tip: "Parfait pour une première fois sur PS5, même sans expérience." },
+    "overcooked-all-you-can-eat": { platform: "PS5", genre: "Chaos coop", players: "1 à 4 joueurs en local", level: "Débutant OK", theme: 2,
+      text: "Vous cuisinez en équipe dans des cuisines absurdes : une carte qui bouge, du feu qui prend et des commandes à servir avant la fin du temps.",
+      here: "Le meilleur test d’amitié de la salle. Sur le canapé à quatre, la communication fait tout.",
+      tip: "Garde ton calme : la cuisine brûle plus vite quand on crie." }
+  };
+
+  function slugify(t) {
+    return t.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  }
+
+  var gameCards = $$(".game-card");
+  if (gameCards.length && typeof HTMLDialogElement === "function") {
+    var dlg = document.createElement("dialog");
+    dlg.className = "game-modal";
+    dlg.setAttribute("aria-labelledby", "gm-title");
+    dlg.innerHTML =
+      '<div class="gm-panel">' +
+        '<div class="gm-art" data-theme="0">' +
+          '<div class="gm-grid" aria-hidden="true"></div>' +
+          '<span class="gm-bigword" aria-hidden="true"></span>' +
+          '<span class="gm-orb gm-orb--a" aria-hidden="true"></span><span class="gm-orb gm-orb--b" aria-hidden="true"></span>' +
+          '<div class="gm-tile" aria-hidden="true"><svg class="icon" focusable="false"><use href="#i-gamepad"/></svg></div>' +
+          '<span class="gm-platform"></span>' +
+          '<button class="gm-close" type="button" aria-label="Fermer la fiche"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>' +
+        '</div>' +
+        '<div class="gm-body">' +
+          '<p class="gm-genre gm-st" style="--i:0"></p>' +
+          '<h2 id="gm-title" class="gm-st" style="--i:1"></h2>' +
+          '<div class="gm-facts gm-st" style="--i:2"><div><b>Joueurs</b><span class="gm-players"></span></div><div><b>Plateforme</b><span class="gm-plat2"></span></div><div><b>Niveau</b><span class="gm-level"></span></div></div>' +
+          '<p class="gm-text gm-st" style="--i:3"></p>' +
+          '<div class="gm-here gm-st" style="--i:4"><h3>Chez GLITCH</h3><p class="gm-here-text"></p></div>' +
+          '<p class="gm-tip gm-st" style="--i:5"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/></svg><span></span></p>' +
+          '<div class="gm-actions gm-st" style="--i:6"><a class="btn btn--primary" href="reservation.html">Réserver pour y jouer</a><button class="btn btn--outline gm-close2" type="button">Fermer</button></div>' +
+        '</div>' +
+      '</div>';
+    document.body.appendChild(dlg);
+
+    var panel = $(".gm-panel", dlg);
+    var art = $(".gm-art", dlg);
+    var activeCard = null;
+    var closing = false;
+
+    var invertFor = function (card) {
+      var from = card.getBoundingClientRect();
+      var to = panel.getBoundingClientRect();
+      var sx = Math.max(from.width / to.width, 0.05);
+      var sy = Math.max(from.height / to.height, 0.05);
+      return "translate(" + (from.left - to.left) + "px," + (from.top - to.top) + "px) scale(" + sx + "," + sy + ")";
+    };
+
+    var fill = function (card, g, title) {
+      var link = $("a.btn--primary", dlg);
+      art.setAttribute("data-theme", String(g.theme));
+      $(".gm-bigword", dlg).textContent = title;
+      $(".gm-platform", dlg).textContent = g.platform;
+      $(".gm-genre", dlg).textContent = g.genre;
+      $("#gm-title", dlg).textContent = title;
+      $(".gm-players", dlg).textContent = g.players;
+      $(".gm-plat2", dlg).textContent = g.platform === "PC" ? "PC gaming" : "PlayStation 5";
+      $(".gm-level", dlg).textContent = g.level;
+      $(".gm-text", dlg).textContent = g.text;
+      $(".gm-here-text", dlg).textContent = g.here;
+      $(".gm-tip span", dlg).textContent = g.tip;
+      var use = $(".icon use", card);
+      if (use) $(".gm-tile use", dlg).setAttribute("href", use.getAttribute("href"));
+      link.setAttribute("href", "reservation.html?espace=" + (g.platform === "PC" ? "pc" : "ps5"));
+    };
+
+    var openGame = function (card) {
+      var title = card.getAttribute("data-title");
+      var g = GAMES[card.getAttribute("data-game")];
+      if (!g) return;
+      activeCard = card;
+      fill(card, g, title);
+      dlg.showModal();
+      document.documentElement.style.overflow = "hidden";
+      panel.scrollTop = 0;
+      if (reduceMotion) { dlg.classList.add("is-open"); return; }
+      panel.style.transition = "none";
+      panel.style.transformOrigin = "0 0";
+      panel.style.transform = invertFor(card);
+      panel.style.opacity = "0.2";
+      void panel.offsetWidth;
+      dlg.classList.add("is-open");
+      panel.style.transition = "transform .6s cubic-bezier(.2,.9,.25,1), opacity .35s ease";
+      panel.style.transform = "none";
+      panel.style.opacity = "1";
+    };
+
+    var finishClose = function () {
+      dlg.close();
+      dlg.classList.remove("is-open");
+      panel.style.transition = "";
+      panel.style.transform = "";
+      panel.style.opacity = "";
+      document.documentElement.style.overflow = "";
+      closing = false;
+      if (activeCard) activeCard.focus({ preventScroll: true });
+    };
+
+    var closeGame = function () {
+      if (closing || !dlg.open) return;
+      closing = true;
+      dlg.classList.remove("is-open");
+      if (reduceMotion || !activeCard) { finishClose(); return; }
+      panel.style.transition = "transform .45s cubic-bezier(.5,0,.2,1), opacity .4s ease";
+      panel.style.transform = invertFor(activeCard);
+      panel.style.opacity = "0";
+      window.setTimeout(finishClose, 460);
+    };
+
+    gameCards.forEach(function (card) {
+      var title = $(".game-title", card).textContent;
+      card.setAttribute("data-title", title);
+      card.setAttribute("data-game", slugify(title));
+      card.addEventListener("click", function () { openGame(card); });
+    });
+    $(".gm-close", dlg).addEventListener("click", closeGame);
+    $(".gm-close2", dlg).addEventListener("click", closeGame);
+    dlg.addEventListener("cancel", function (e) { e.preventDefault(); closeGame(); });
+    dlg.addEventListener("click", function (e) { if (e.target === dlg) closeGame(); });
+
+    // Effet de profondeur sur l'illustration
+    if (!reduceMotion) {
+      art.addEventListener("pointermove", function (e) {
+        var r = art.getBoundingClientRect();
+        var x = (e.clientX - r.left) / r.width - 0.5;
+        var y = (e.clientY - r.top) / r.height - 0.5;
+        art.style.setProperty("--rx", (-y * 10).toFixed(2) + "deg");
+        art.style.setProperty("--ry", (x * 14).toFixed(2) + "deg");
+      });
+      art.addEventListener("pointerleave", function () {
+        art.style.setProperty("--rx", "0deg");
+        art.style.setProperty("--ry", "0deg");
+      });
+    }
+  }
 })();
